@@ -56,3 +56,12 @@ oystercard.top_up(20)
 MINIMUM_FARE = 2
 oystercard.touch_out
 oystercard.balance == 18
+
+# In order to pay for my journey
+# As a customer
+# I need to know where I've travelled from
+
+load './lib/oystercard.rb'
+oystercard = Oystercard.new
+oystercard.touch_in(departure)
+# to return oyster.departure

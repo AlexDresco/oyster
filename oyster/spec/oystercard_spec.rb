@@ -22,6 +22,7 @@ describe Oystercard do
 
 
     describe "#touch_in" do
+
       it 'Should raise an error if balance is bellow £1' do
         subject.top_up(0.99)
         expect { subject.touch_in }.to raise_error('Insufficient funds')
@@ -31,9 +32,14 @@ describe Oystercard do
       before(:each) do
         subject.top_up(20)
       end
-       it 'touches in oystercard' do
+    it 'touches in oystercard' do
          expect(subject.touch_in).to eq true
     end
+
+    describe "#departure" do
+    it { is_expected.to respond_to :departure }
+    end
+
 
    describe '#touch_out' do
      it 'touches out oystercard after touching in' do

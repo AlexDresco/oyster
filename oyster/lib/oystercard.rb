@@ -1,6 +1,6 @@
 class Oystercard
 
-  attr_reader :balance, :checked_in
+  attr_reader :balance, :checked_in, :departure
   MAXIMUM = 90
   MINIMUM_FARE = 2
 
@@ -13,8 +13,6 @@ class Oystercard
     fail 'Unable to top up,maximum #{Oystercard::MAXIMUM} reached'if balance + money > MAXIMUM
       @balance += money
   end
-
-
 
   def touch_in
     fail 'Insufficient funds' if @balance < 1
