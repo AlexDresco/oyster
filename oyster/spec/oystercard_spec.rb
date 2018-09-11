@@ -6,6 +6,9 @@ describe Oystercard do
     expect(subject.balance).to eq 0
   end
 
+  it "Should initialize status to 'out' by default" do
+    expect(subject.checked_in).to eq false
+  end
 
   it "when we top up £10, add to balance" do
     subject.top_up(10)
@@ -22,4 +25,29 @@ describe Oystercard do
   it "should deduct money from balance when used" do
     expect {subject.deduct(1)}.to change{subject.balance}.by(-1)
   end
+
+  it { is_expected.to respond_to(:touch_in)}
+  it { is_expected.to respond_to(:touch_out)}
+  it { is_expected.to respond_to(:in_journey?)}
+
+  describe "#touch_in" do
+    it 'touches in oystercard' do
+      expect(subject.touch_in).to eq true
+    end
+  end
+
+  describe '#touch_out' do
+    it 'touches out oystercard after touching in' do
+      subject.touch_in
+      expect(subject.touch_out).to eq false
+    end
+  end
+
+  describe '#in_journey' do
+    it 'should return true when in journey' do
+    subject.touch_in
+    expect(subject.in_journey?).to eq true
+    end
+  end
+
 end
