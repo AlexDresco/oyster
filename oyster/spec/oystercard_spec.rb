@@ -17,31 +17,35 @@ describe Oystercard do
 
   it "raises error when balance + top up amounts to a set limit" do
     allow(subject).to receive(:balance) {Oystercard::MAXIMUM}
-    expect{subject.top_up(1)}.to raise_error ('Unable to top up,maximum #{Oystercard::MAXIMUM} reached')
+    expect{subject.top_up(1)}.to raise_error('Unable to top up,maximum #{Oystercard::MAXIMUM} reached')
   end
 
-  it { is_expected.to respond_to(:deduct).with(1).argument }
 
-  it "should deduct money from balance when used" do
-    expect {subject.deduct(1)}.to change{subject.balance}.by(-1)
-  end
+    describe "#touch_in" do
+      it 'Should raise an error if balance is bellow £1' do
+        subject.top_up(0.99)
+        expect { subject.touch_in }.to raise_error('Insufficient funds')
+      end
 
-  it { is_expected.to respond_to(:touch_in)}
-  it { is_expected.to respond_to(:touch_out)}
-  it { is_expected.to respond_to(:in_journey?)}
-
-  describe "#touch_in" do
-    it 'touches in oystercard' do
-      expect(subject.touch_in).to eq true
+    describe "Touch in with credit" do
+      before(:each) do
+        subject.top_up(20)
+      end
+       it 'touches in oystercard' do
+         expect(subject.touch_in).to eq true
     end
-  end
 
-  describe '#touch_out' do
-    it 'touches out oystercard after touching in' do
-      subject.touch_in
-      expect(subject.touch_out).to eq false
-    end
-  end
+   describe '#touch_out' do
+     it 'touches out oystercard after touching in' do
+       subject.touch_in
+       expect(subject.touch_out).to eq false
+     end
+
+     it 'should deduct the minimum fare when checking out' do
+       expect { subject.touch_out }.to change{ subject.balance }.by(-Oystercard::MINIMUM_FARE)
+       # expect(subject.touch_out).to eq (subject.top_up(2) - Oystercard::MINIMUM_FARE)
+     end
+   end
 
   describe '#in_journey' do
     it 'should return true when in journey' do
@@ -49,5 +53,6 @@ describe Oystercard do
     expect(subject.in_journey?).to eq true
     end
   end
-
+end
+end
 end
