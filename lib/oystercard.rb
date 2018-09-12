@@ -1,6 +1,6 @@
 class Oystercard
 
-  attr_reader :balance, :station
+  attr_reader :balance, :entry_station, :exit_station
   MAXIMUM = 90
   MINIMUM_FARE = 2
 
@@ -14,30 +14,22 @@ class Oystercard
   end
 
   def touch_in(station)
-    @station = station
+    @entry_station = station
     fail 'Insufficient funds' if @balance < MINIMUM_FARE
   end
 
-  def touch_out
+  def touch_out(station)
     deduct(MINIMUM_FARE)
-    @station = nil
+    @exit_station = station
   end
 
   def in_journey?
-    !!@station
+    !!@entry_station
   end
-<<<<<<< HEAD
 
-=======
-  
->>>>>>> 234fc29da19bbec894bbad851063d1bbdc228d14
   private
 
   def deduct(money)
     @balance -= money
   end
 end
-<<<<<<< HEAD
-# added to check git push works? 
-=======
->>>>>>> 234fc29da19bbec894bbad851063d1bbdc228d14

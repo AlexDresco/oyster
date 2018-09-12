@@ -66,3 +66,15 @@ oystercard = Oystercard.new
 oystercard.touch_in("Barbican")
 oystercard.station == "Barbican"
 # to return departing station
+
+In order to know where I have been
+As a customer
+I want to see all my previous trips
+
+load './lib/oystercard.rb'
+card = Oystercard.new
+journey_history = {}
+card.top_up(50)
+card.touch_in("Barbican")
+card.touch_out("Mile End")
+journey_history == {starting_station: 'Barbican', exit_station: 'Mile end'}

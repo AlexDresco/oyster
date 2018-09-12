@@ -23,36 +23,36 @@ describe Oystercard do
   describe "#touch_in" do
     it 'Should raise an error if balance is bellow £1' do
       subject.top_up(0.99)
-      expect { subject.touch_in(@station) }.to raise_error('Insufficient funds')
+      expect { subject.touch_in(@entry_station) }.to raise_error('Insufficient funds')
     end
   end
 
   describe '#station' do
     it 'returns the departure station when touched in' do
       subject.top_up(20)
-      subject.touch_in("Barbican")
-      expect(subject.station).to eq("Barbican")
+      subject.touch_in(@entry_station)
+      expect(subject.entry_station).to eq(@entry_station)
     end
   end
 
   describe '#touch_out' do
     it 'touches out oystercard after touching in' do
       subject.top_up(20)
-      subject.touch_in(@station)
-      subject.touch_out
-      expect(subject.station).to eq nil
+      subject.touch_in(@entry_station)
+      subject.touch_out("Mile End")
+      expect(subject.exit_station).to eq ('Mile End')
     end
 
     it 'should deduct the minimum fare when checking out' do
-      expect { subject.touch_out }.to change{ subject.balance }.by(-Oystercard::MINIMUM_FARE)
+      expect { subject.touch_out('Mile End') }.to change{ subject.balance }.by(-Oystercard::MINIMUM_FARE)
     end
   end
 
   describe '#in_journey?' do
     it 'should return true when in journey' do
       subject.top_up(20)
-      station = 'Barbican'
-      subject.touch_in(station)
+      @entry_station = "Barbican"
+      subject.touch_in(@entry_station)
       expect(subject.in_journey?).to eq true
     end
   end
