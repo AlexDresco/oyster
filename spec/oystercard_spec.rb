@@ -10,7 +10,7 @@ describe Oystercard do
       subject.top_up(20)
       subject.touch_in(@entry_station)
       subject.touch_out(@exit_station)
-      expect(subject.journey_history).to eq({starting_station: @entry_station, exit_station: @exit_station})
+      expect(subject.journey_history).to include ({starting_station: @entry_station, exit_station: @exit_station})
     end
   end
 
@@ -51,12 +51,12 @@ describe Oystercard do
     it 'touches out oystercard after touching in' do
       subject.top_up(20)
       subject.touch_in(@entry_station)
-      subject.touch_out("Mile End")
-      expect(subject.exit_station).to eq ('Mile End')
+      subject.touch_out(@exit_station)
+      expect(subject.exit_station).to eq (@exit_station)
     end
 
     it 'should deduct the minimum fare when checking out' do
-      expect { subject.touch_out('Mile End') }.to change{ subject.balance }.by(-Oystercard::MINIMUM_FARE)
+      expect { subject.touch_out(@exit_station) }.to change{ subject.balance }.by(-Oystercard::MINIMUM_FARE)
     end
   end
 
