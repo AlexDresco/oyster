@@ -26,11 +26,18 @@ class Oystercard
   def in_journey?
     !!@station
   end
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 234fc29da19bbec894bbad851063d1bbdc228d14
   private
 
   def deduct(money)
     @balance -= money
   end
 end
+<<<<<<< HEAD
 # added to check git push works? 
+=======
+>>>>>>> 234fc29da19bbec894bbad851063d1bbdc228d14
