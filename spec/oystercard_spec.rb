@@ -1,6 +1,18 @@
 require 'oystercard'
 
 describe Oystercard do
+  describe "#journey_history" do
+    it "should initially create an empty journey history" do
+      expect(subject.journey_history).to eq({})
+    end
+
+    it "should store the journey history check-ins and outs" do
+      subject.top_up(20)
+      subject.touch_in(@entry_station)
+      subject.touch_out(@exit_station)
+      expect(subject.journey_history).to eq({starting_station: @entry_station, exit_station: @exit_station})
+    end
+  end
 
   describe "#balance" do
     it "the balance should be 0 by default" do
