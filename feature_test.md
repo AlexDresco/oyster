@@ -78,3 +78,12 @@ card.top_up(50)
 card.touch_in("Barbican")
 card.touch_out("Mile End")
 journey_history == {starting_station: 'Barbican', exit_station: 'Mile end'}
+
+# In order to know how far I have travelled
+# As a customer
+# I want to know what zone a station is in
+
+load './lib/station.rb'
+station = Station.new(name, zone)
+station.name
+station.zone
