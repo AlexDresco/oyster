@@ -87,3 +87,17 @@ load './lib/station.rb'
 station = Station.new(name, zone)
 station.name
 station.zone
+
+# In order to be charged correctly
+# As a customer
+# I need a penalty charge deducted if I fail to touch in or out
+load './lib/journey.rb'
+journey = Journey.new("station.new1", "station.new2")
+journey.entry_station("barbican")
+#it returns entry station
+journey.exit_station("barbican")
+#it returns exit station
+journey.fare(entry_station, exit_station)
+#it calculates the fare of the journey
+journey.history
+journey.complete?
